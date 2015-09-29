@@ -37,6 +37,8 @@
                      <th class="text-left" width="150">Código</th>
                      <th class="text-left">Descripción</th>
                      <th class="text-center">Sin {#FS_IVA#}</th>
+                     <th class="text-center">Ejercicio</th>
+                     <th class="text-right" width="100">Número Factura</th>
                      <th class="text-right" width="100">% {#FS_IRPF#}</th>
                      <th class="text-right" width="120">Acciones</th>
                   </tr>
@@ -48,6 +50,18 @@
                      <td><div class="form-control">{$value->codserie}</div></td>
                      <td><input class="form-control" type="text" name="descripcion" value="{$value->descripcion}" autocomplete="off"/></td>
                      <td class="text-center"><input type="checkbox" name="siniva" value="TRUE"{if="$value->siniva"} checked="checked"{/if}/></td>
+                     <td>
+                        <select name="codejercicio" class="form-control">
+                        {loop="$fsc->ejercicio->all()"}
+                           {if="$fsc->serie->codejercicio==$value->codejercicio"}
+                           <option value="{$value->codejercicio}" selected="selected">{$value->nombre}</option>
+                           {else}
+                           <option value="{$value->codejercicio}">{$value->nombre}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </td>
+                     <td><input class="form-control text-right" type="text" name="numfactura" value="{$value->numfactura}" autocomplete="off"/></td>
                      <td><input class="form-control text-right" type="text" name="irpf" value="{$value->irpf}" autocomplete="off"/></td>
                      <td class="text-right">
                         <div class="btn-group">
@@ -75,6 +89,14 @@
                      <td><input class="form-control" type="text" name="codserie" maxlength="2" placeholder="Nuevo código..." autocomplete="off"/></td>
                      <td><input class="form-control" type="text" name="descripcion" placeholder="Descripción" autocomplete="off"/></td>
                      <td class="text-center"><input type="checkbox" name="siniva" value="TRUE"/></td>
+                     <td>
+                        <select name="codejercicio" class="form-control">
+                        {loop="$fsc->ejercicio->all()"}
+                           <option value="{$value->codejercicio}">{$value->nombre}</option>
+                        {/loop}
+                        </select>
+                     </td>
+                     <td><input class="form-control text-right" type="text" name="numfactura" value="1" autocomplete="off"/></td>
                      <td><input class="form-control text-right" type="text" name="irpf" value="0" autocomplete="off"/></td>
                      <td class="text-right">
                         <button class="btn btn-sm btn-primary" type="submit" title="Guardar" onclick="this.disabled=true;this.form.submit();">

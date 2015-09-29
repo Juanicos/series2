@@ -18,11 +18,13 @@
  */
 
 require_model('serie.php');
+require_model('ejercicio.php');
 
 class contabilidad_series extends fs_controller
 {
    public $allow_delete;
    public $serie;
+   public $ejercicio;
    
    public function __construct()
    {
@@ -32,6 +34,7 @@ class contabilidad_series extends fs_controller
    protected function private_core()
    {
       $this->serie = new serie();
+      $this->ejercicio = new ejercicio();
       
       /// ¿El usuario tiene permiso para eliminar en esta página?
       $this->allow_delete = $this->user->allow_delete_on(__CLASS__);
@@ -47,6 +50,8 @@ class contabilidad_series extends fs_controller
          $serie->descripcion = $_POST['descripcion'];
          $serie->siniva = isset($_POST['siniva']);
          $serie->irpf = floatval($_POST['irpf']);
+         $serie->codejercicio = $_POST['codejercicio'];
+         $serie->numfactura = $_POST['numfactura'];
          if( $serie->save() )
          {
             $this->new_message("Serie ".$serie->codserie." guardada correctamente");

@@ -47,6 +47,18 @@ class serie extends fs_model
     * @var type 
     */
    public $idcuenta;
+   
+   /**
+    * ejercicio para el que asignamos la numeración inicial de la serie.
+    * @var type 
+    */
+   public $codejercicio;
+   
+   /**
+    * numeración inicial para las facturas de esta serie.
+    * @var type 
+    */
+   public $numfactura;
 
    public function __construct($s=FALSE)
    {
@@ -58,6 +70,8 @@ class serie extends fs_model
          $this->siniva = $this->str2bool($s['siniva']);
          $this->irpf = floatval($s['irpf']);
          $this->idcuenta = $this->intval($s['idcuenta']);
+         $this->codejercicio = $s['codejercicio'];
+         $this->numfactura = $s['numfactura'];
       }
       else
       {
@@ -66,13 +80,15 @@ class serie extends fs_model
          $this->siniva = FALSE;
          $this->irpf = 0;
          $this->idcuenta = NULL;
+         $this->codejercicio = NULL;
+         $this->numfactura = NULL;
       }
    }
    
    public function install()
    {
       $this->clean_cache();
-      return "INSERT INTO ".$this->table_name." (codserie,descripcion,siniva,irpf,idcuenta) VALUES ('A','SERIE A',FALSE,'0',NULL);";
+      return "INSERT INTO ".$this->table_name." (codserie,descripcion,siniva,irpf,idcuenta,codejercicio,numfactura) VALUES ('A','SERIE A',FALSE,'0',NULL,NULL,NULL);";
    }
    
    public function url()
@@ -141,13 +157,17 @@ class serie extends fs_model
          {
             $sql = "UPDATE ".$this->table_name." SET descripcion = ".$this->var2str($this->descripcion).",
                siniva = ".$this->var2str($this->siniva).", irpf = ".$this->var2str($this->irpf).",
-               idcuenta = ".$this->var2str($this->idcuenta)." WHERE codserie = ".$this->var2str($this->codserie).";";
+               idcuenta = ".$this->var2str($this->idcuenta).",
+               codejercicio = ".$this->var2str($this->codejercicio).", 
+               numfactura = ".$this->var2str($this->numfactura)."
+                WHERE codserie = ".$this->var2str($this->codserie).";";
          }
          else
          {
-            $sql = "INSERT INTO ".$this->table_name." (codserie,descripcion,siniva,irpf,idcuenta)
+            $sql = "INSERT INTO ".$this->table_name." (codserie,descripcion,siniva,irpf,idcuenta,codejercicio,numfactura)
                VALUES (".$this->var2str($this->codserie).",".$this->var2str($this->descripcion).",".$this->var2str($this->siniva).",
-               ".$this->var2str($this->irpf).",".$this->var2str($this->idcuenta).");";
+               ".$this->var2str($this->irpf).",".$this->var2str($this->idcuenta).",".$this->var2str($this->codejercicio).",
+               ".$this->var2str($this->numfactura).");";
          }
          return $this->db->exec($sql);
       }

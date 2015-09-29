@@ -35,6 +35,16 @@
       <tipo>character varying(6)</tipo>
       <nulo>YES</nulo>
    </columna>
+   <columna>
+      <nombre>codejercicio</nombre>
+      <tipo>character varying(4)</tipo>
+      <nulo>YES</nulo>
+   </columna>
+   <columna>
+      <nombre>numfactura</nombre>
+      <tipo>character varying(12)</tipo>
+      <nulo>YES</nulo>
+   </columna>
    <restriccion>
       <nombre>series_pkey</nombre>
       <consulta>PRIMARY KEY (codserie)</consulta>

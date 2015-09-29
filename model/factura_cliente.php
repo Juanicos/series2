@@ -559,10 +559,20 @@ class factura_cliente extends fs_model
    }
    
    public function new_codigo()
-   {
+   {       
+       $num = intval(FS_NFACTURA_CLI); /// definido en el config2
+       
+       // buscamos el número inicial para la serie
+      $serie0 = new serie();
+      
+      if ($serie = $serie0->get($this->codserie))
+      {
+          if ($this->codejercicio == $serie->codejercicio)
+            $num = $serie->numfactura;
+      }
+      
       /// buscamos un hueco
-      $encontrado = FALSE;
-      $num = intval(FS_NFACTURA_CLI); /// definido en el config2
+      $encontrado = FALSE; 
       $fecha = $this->fecha;
       $numeros = $this->db->select("SELECT ".$this->db->sql_to_int('numero')." as numero,fecha
          FROM ".$this->table_name." WHERE codejercicio = ".$this->var2str($this->codejercicio).
@@ -581,7 +591,7 @@ class factura_cliente extends fs_model
                $num++;
          }
       }
-      
+       
       if($encontrado)
       {
          $this->numero = $num;
